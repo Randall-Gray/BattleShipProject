@@ -6,26 +6,33 @@ using System.Threading.Tasks;
 
 namespace Battleship
 {
-    class Ship
+    public class Ship
     {
         // Member variables
-        public string type;
+        public string type;         // Destroyer, Submarine, Cruiser, Battleship, Aircraft Carrier
         public int numHoles;
-        public Hole location;
-        public int orientation;   // Up, down, left, right starting at location.
+        public bool deployed;       // placed on board?
+        public bool sunk;
 
         // constructor
         public Ship(string type, int numHoles)
         {
             this.type = type;
             this.numHoles = numHoles;
+            deployed = false;
+            sunk = false;
         }
 
         // Member methods
-        public void PlaceShip(Hole location, int orientation)
+        public string ShipTypeAndSize()
         {
-            this.location = location;
-            this.orientation = orientation;
+            return type + "(" + numHoles + ")";
         }
+        // A ship's Hole.type is the first letter of the ship's type, capitalized, and in parenthesis. 
+        public string ShipHoleType()
+        {
+            return "(" + type.ToUpper()[0] + ")";
+        }
+
     }
 }

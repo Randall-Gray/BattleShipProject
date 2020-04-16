@@ -6,37 +6,18 @@ using System.Threading.Tasks;
 
 namespace Battleship
 {
-    class Hole
+    public class Hole
     {
         // Member variables
-        public string type;     // "( )", "(M)", "(S)", "(H)" 
+        public string type;     // "( )", "(-)", "(!)", "(D)", "(S)", "(C)", "(B)", "(A)" 
 
         // Constructor
-        public Hole(int x, int y)
+        public Hole()
         {
-            x_coord = x;
-            y_coord = y;
-            hasShip = false;
-            hasPeg = false;
+            type = "( )";       // empty
         }
 
         // Member methods
-        public string Status()
-        {
-            if (hasShip)
-            {
-                if (hasPeg)
-                    return "(H)";
-                else
-                    return "(S)";
-            }
-            else 
-            {
-                if (hasPeg)
-                    return "(M)";
-                else
-                    return "(E)";
-            }
-        }
     }
+
 }

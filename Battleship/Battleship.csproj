@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Board.cs" />
     <Compile Include="Fleet.cs" />
+    <Compile Include="GameSimulation.cs" />
     <Compile Include="Hole.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />

@@ -6,16 +6,17 @@ using System.Threading.Tasks;
 
 namespace Battleship
 {
-    class Fleet
+    public class Fleet
     {
         // Member variables
-        List<Ship> ships;
+        public List<Ship> ships;    
 
         // constructor
         public Fleet()
         {
             ships = new List<Ship>();
 
+            // ship names must start with different letter to distintguish them on board.
             ships.Add(new Ship("Destroyer", 2));
             ships.Add(new Ship("Submarine", 3));
             ships.Add(new Ship("Cruiser", 3));
@@ -24,12 +25,32 @@ namespace Battleship
         }
 
         // Member methods
-        // Writes line to console listing available ships in fleet:  "ship1(size)  ship2(size)...."
-        public void WriteLine()
+        // Displays list of ships to deploy for number selection   e.g. "1) Destroyer (2)"....
+        public void DisplayShipsToDeploy()
         {
             for (int i = 0; i < ships.Count; i++)
-                Console.Write(ships[i].type + "(" + ships[i].numHoles + ")  ");
-            Console.Write("\n");
+                if (!ships[i].deployed)
+                     Console.WriteLine(i + ") " + ships[i].ShipTypeAndSize());
+        }
+        // Returns if all ships in fleet are deployed.
+        public bool AllDeployed()
+        {
+            for (int i = 0; i < ships.Count; i++)
+                if (!ships[i].deployed)
+                    return false;
+
+            return true;
+        }
+        public int ConvertUndeployedShipNumber(int numNotDeployed)
+        {
+            int i = 0;
+
+            for (; i < ships.Count && numNotDeployed; i++)
+            {
+                if (!ships[i].deployed)
+                    numNotDeployed--;
+            }
+            return i
         }
     }
 }
