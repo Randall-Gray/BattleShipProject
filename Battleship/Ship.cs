@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Battleship
 {
-    public class Ship
+    public abstract class Ship
     {
         // Member variables
         public string type;         // Destroyer, Submarine, Cruiser, Battleship, Aircraft Carrier
@@ -28,11 +28,11 @@ namespace Battleship
         {
             return type + "(" + numHoles + ")";
         }
+
         // A ship's Hole.type is the first letter of the ship's type, capitalized, and in parenthesis. 
         public string ShipHoleType()
         {
             return "(" + type.ToUpper()[0] + ")";
         }
-
     }
 }

@@ -16,22 +16,14 @@ namespace Battleship
         {
             ships = new List<Ship>();
 
-            // ship names must start with different letter to distintguish them on board.
-            ships.Add(new Ship("Destroyer", 2));
-            ships.Add(new Ship("Submarine", 3));
-            ships.Add(new Ship("Cruiser", 3));
-            ships.Add(new Ship("Battleship", 4));
-            ships.Add(new Ship("Aircraft Carrier", 5));
+            ships.Add(new Destroyer());
+            ships.Add(new Submarine());
+            ships.Add(new Cruiser());
+            ships.Add(new Battleship());
+            ships.Add(new AircraftCarrier());
         }
 
         // Member methods
-        // Displays list of ships to deploy for number selection   e.g. "1) Destroyer (2)"....
-        public void DisplayShipsToDeploy()
-        {
-            for (int i = 0; i < ships.Count; i++)
-                if (!ships[i].deployed)
-                     Console.WriteLine(i + ") " + ships[i].ShipTypeAndSize());
-        }
         // Returns if all ships in fleet are deployed.
         public bool AllDeployed()
         {
@@ -41,16 +33,18 @@ namespace Battleship
 
             return true;
         }
-        public int ConvertUndeployedShipNumber(int numNotDeployed)
+
+        // The ship deployment list gets smaller as ships are deployed.  Convert list selection to actual fleet ship number.
+        public int ConvertSelectionToFleetShipNumber(int nonDeployedShipNumber)
         {
             int i = 0;
 
-            for (; i < ships.Count && numNotDeployed; i++)
+            for (; i < ships.Count && nonDeployedShipNumber > 0; i++)
             {
                 if (!ships[i].deployed)
-                    numNotDeployed--;
+                    nonDeployedShipNumber--;
             }
-            return i
+            return i - 1;
         }
     }
 }

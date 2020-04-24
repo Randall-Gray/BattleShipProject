@@ -43,7 +43,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AircraftCarrier.cs" />
+    <Compile Include="Battleship.cs" />
     <Compile Include="Board.cs" />
+    <Compile Include="Constants.cs" />
+    <Compile Include="Cruiser.cs" />
+    <Compile Include="Destroyer.cs" />
     <Compile Include="Fleet.cs" />
     <Compile Include="GameSimulation.cs" />
     <Compile Include="Hole.cs" />
@@ -51,6 +56,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Ship.cs" />
+    <Compile Include="Submarine.cs" />
+    <Compile Include="UserInterface.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

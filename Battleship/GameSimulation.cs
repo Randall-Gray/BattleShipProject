@@ -20,19 +20,23 @@ namespace Battleship
         // Member methods
         public void RunGame()
         {
-            Console.Clear();
-            Console.WriteLine("Let's play \"Battleship\"");
+            bool winner = false;
 
-            Console.WriteLine("\nEnter player1 name: ");
-            player1 = new Player(Console.ReadLine());
+            UserInterface.Welcome();
 
-            Console.WriteLine("\nEnter player2 name: ");
-            player2 = new Player(Console.ReadLine());
+            player1 = new Player(UserInterface.GetPlayerName("player1"));
+            player2 = new Player(UserInterface.GetPlayerName("player2"));
 
             player1.PlaceShips();
-            player1.PlaceShips();
+            player2.PlaceShips();
 
-            Console.ReadLine();
+            do
+            {
+                winner = player1.MakeGuess(player2);
+                winner = player2.MakeGuess(player1);
+            } while (!winner);
+
+            UserInterface.DisplayEndGameStats();
         }
     }
 }

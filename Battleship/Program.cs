@@ -14,12 +14,9 @@ namespace Battleship
 
             do
             {
-                Console.Clear();
-
                 BattleShip.RunGame();
 
-                Console.WriteLine("\nWould you like to play again? (Y/N)");
-                if (Console.ReadLine().ToUpper() != "Y")
+                if (UserInterface.AskUserYesOrNo("Would you like to play again") != true)
                     break;
             }
             while (true);

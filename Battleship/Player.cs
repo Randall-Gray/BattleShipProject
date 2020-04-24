@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Battleship
 {
-    class Player
+    public class Player
     {
         // Member variables
         public string name;
@@ -18,47 +18,25 @@ namespace Battleship
         public Player(string name)
         {
             this.name = name;
-            shipBoard = new Board("Ship");
-            guessBoard = new Board("Guess");
+            shipBoard = new Board("Ship", Constants.boardNumRows, Constants.boardNumCols);
+            guessBoard = new Board("Guess", Constants.boardNumRows, Constants.boardNumCols);
             fleet = new Fleet(); 
         }
 
         // Member methods
         public void PlaceShips()
         {
-            bool validInput;
             int numShip;
 
             do
             {
-                Console.Clear();
-                Console.WriteLine("\n" + name + " deploy your ships.");
-                numShip = SelectShipToDeploy();
-                Console.Clear();
-                shipBoard.DisplayBoard();
+                numShip = UserInterface.SelectShipToDeploy(name, fleet);
+                UserInterface.DisplayBoard(shipBoard);
                 PlaceShipOnBoard(numShip);
             }
             while (!fleet.AllDeployed());
         }
-        private int SelectShipToDeploy()
-        {
-            int numShip;
-            bool validInput;
 
-            do
-            {
-                Console.WriteLine("\nSelect ship to deploy:");
-                fleet.DisplayShipsToDeploy();
-                // protect against non-number input
-                validInput = int.TryParse(Console.ReadLine(), out numShip);
-                if (!validInput)
-                    continue;
-                numShip = fleet.GetUndeployedShipNumber(numShip);
-            }
-            while (!validInput || numShip < 0 || numShip > fleet.ships.Count - 1);
-
-            return numShip;
-        }
         private void PlaceShipOnBoard(int numShip)
         {
             int row;
@@ -67,23 +45,11 @@ namespace Battleship
 
             do
             {
-                Console.WriteLine("\n" + name + " enter location to deploy " + fleet.ships[numShip].ShipTypeAndSize() + ". (row, colum, orientation)");
-                do
-                {
-                    Console.WriteLine("Enter row:");
-                } while (!int.TryParse(Console.ReadLine(), out row) || row < 0 || row > shipBoard.numRows - 1);
-                do
-                {
-                    Console.WriteLine("Enter column:");
-                } while (!int.TryParse(Console.ReadLine(), out col) || col < 0 || col > shipBoard.numCols - 1);
-                do
-                {
-                    Console.WriteLine("Enter orientation (left, right, up, down):");
-                    orientation = Console.ReadLine();
-                } while (orientation.ToLower() != "left" && orientation.ToLower() != "right" && orientation.ToLower() != "up" && orientation.ToLower() != "down");
+                UserInterface.GetLocationToDeployShip(name, fleet, numShip, out row, out col, out orientation);
             }
             while (!PlaceShip(numShip, row, col, orientation));
         }
+
         // Determine if ship location is valid.  Within board and nothing else in location. If valid, place ship.
         private bool PlaceShip(int numShip, int row, int col, string orientation)
         {
@@ -147,7 +113,7 @@ namespace Battleship
                 }
             }
             if (rtnBool == false)
-                Console.WriteLine("Invalid location for " + fleet.ships[numShip].ShipTypeAndSize());
+                UserInterface.DisplayLocationInvalidForShip(fleet, numShip);
             else
             {
                 // Place the ship
@@ -163,6 +129,21 @@ namespace Battleship
 
             return true;
         }
+
+        public bool MakeGuess(Player opponent)
+        {
+            int row;
+            int col;
+
+            do
+            {
+                UserInterface.DisplayBoard(guessBoard);
+                UserInterface.GetPlayerGuess(name, out row, out col);
+            }
+            while (false);
+            return true;
+        }
+
         //public void ChooseActions()
         //{
         //    bool validInput;
@@ -173,10 +154,9 @@ namespace Battleship
         //    {
         //        Console.WriteLine("\n" + name + " select an action: ");
         //        Console.WriteLine("1) Display Ship Board");
-        //        Console.WriteLine("2) Place Ship On Ship Board");
         //        Console.WriteLine("3) Display Guess Board");
         //        Console.WriteLine("4) Make Guess on Guess Board");
-        //        // protect against non-number input
+
         //        validInput = int.TryParse(Console.ReadLine(), out numAction);
         //        if (!validInput)
         //            continue;
@@ -189,7 +169,5 @@ namespace Battleship
         //    Console.WriteLine("\nPress any key to continue...");
         //    Console.ReadLine();
         //}
-
-
     }
 }
