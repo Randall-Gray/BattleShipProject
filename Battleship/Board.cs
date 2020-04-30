@@ -23,6 +23,7 @@ namespace Battleship
             this.type = type;
 
             grid = new Hole[numRows,numCols];
+
             // Must put a Hole into each grid index.
             for (int i = 0; i < numRows; i++)
             {

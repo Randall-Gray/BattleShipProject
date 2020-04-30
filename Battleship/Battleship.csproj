@@ -46,7 +46,6 @@
     <Compile Include="AircraftCarrier.cs" />
     <Compile Include="Battleship.cs" />
     <Compile Include="Board.cs" />
-    <Compile Include="Constants.cs" />
     <Compile Include="Cruiser.cs" />
     <Compile Include="Destroyer.cs" />
     <Compile Include="Fleet.cs" />

@@ -11,16 +11,16 @@ namespace Battleship
         // Member variables
         public string type;         // Destroyer, Submarine, Cruiser, Battleship, Aircraft Carrier
         public int numHoles;
+        public int numHits;
         public bool deployed;       // placed on board?
-        public bool sunk;
 
         // constructor
         public Ship(string type, int numHoles)
         {
             this.type = type;
             this.numHoles = numHoles;
+            numHits = 0;
             deployed = false;
-            sunk = false;
         }
 
         // Member methods

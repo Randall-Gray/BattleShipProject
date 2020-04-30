@@ -10,16 +10,16 @@ namespace Battleship
     {
         // Member variables
         public string name;
-        public Board shipBoard;
         public Board guessBoard;
+        public Board shipBoard;
         public Fleet fleet;
 
         // constructor
         public Player(string name)
         {
             this.name = name;
-            shipBoard = new Board("Ship", Constants.boardNumRows, Constants.boardNumCols);
-            guessBoard = new Board("Guess", Constants.boardNumRows, Constants.boardNumCols);
+            guessBoard = new Board("Guess", 20, 20);
+            shipBoard = new Board("Ship", 20, 20);
             fleet = new Fleet(); 
         }
 
@@ -30,7 +30,7 @@ namespace Battleship
 
             do
             {
-                numShip = UserInterface.SelectShipToDeploy(name, fleet);
+                numShip = UserInterface.SelectShipToDeploy(this);
                 UserInterface.DisplayBoard(shipBoard);
                 PlaceShipOnBoard(numShip);
             }
@@ -45,7 +45,7 @@ namespace Battleship
 
             do
             {
-                UserInterface.GetLocationToDeployShip(name, fleet, numShip, out row, out col, out orientation);
+                UserInterface.GetLocationToDeployShip(this, numShip, out row, out col, out orientation);
             }
             while (!PlaceShip(numShip, row, col, orientation));
         }
@@ -138,10 +138,27 @@ namespace Battleship
             do
             {
                 UserInterface.DisplayBoard(guessBoard);
-                UserInterface.GetPlayerGuess(name, out row, out col);
+                UserInterface.GetPlayerGuess(this, out row, out col);
+
+                guessBoard.grid[row, col] = opponent.shipBoard.grid[row, col];
+                if (guessBoard.grid[row, col].type == "( )")
+                    guessBoard.grid[row, col].type = "(-)";     // Miss
+                else    // Hit
+                {
+                    MarkShipHit(opponent, row, col);
+
+                }
+
+                //    CheckIfShipSunk(opponent.shipBoard, row, col);
+                //UserInterface.ReportHitOrMiss(row, col, guessBoard.grid[row, col]);
             }
             while (false);
             return true;
+        }
+
+        private void MarkShipHit(Player player, int row, int col)
+        {
+
         }
 
         //public void ChooseActions()

@@ -21,28 +21,27 @@ namespace Battleship
             return Console.ReadLine();
         }
 
-        static public int SelectShipToDeploy(string playerName, Fleet fleet)
+        static public int SelectShipToDeploy(Player player)
         {
             int numShip;
             int numDeployed;
             bool validInput;
 
             Console.Clear();
-            Console.WriteLine("\n" + playerName + " deploy your ships.");
+            Console.WriteLine("\n" + player.name + " deploy your ships.");
 
             do
             {
                 Console.WriteLine("\nSelect ship to deploy:");
-                numDeployed = UserInterface.DisplayShipsToDeploy(fleet);
+                numDeployed = UserInterface.DisplayShipsToDeploy(player.fleet);
                 
                 validInput = int.TryParse(Console.ReadLine(), out numShip);
                 if (!validInput)
                     continue;
-
             }
-            while (!validInput || numShip <= 0 || numShip > fleet.ships.Count - numDeployed);
+            while (!validInput || numShip <= 0 || numShip > player.fleet.ships.Count - numDeployed);
 
-            return fleet.ConvertSelectionToFleetShipNumber(numShip);
+            return player.fleet.ConvertSelectionToFleetShipNumber(numShip);
         }
 
         // Displays list of remaining ships in fleet to deploy for number selection   e.g. "1) Destroyer (2)"....
@@ -94,17 +93,17 @@ namespace Battleship
             Console.Write("\n");
         }
 
-        static public void GetLocationToDeployShip(string playerName, Fleet fleet, int numShip, out int row, out int col, out string orientation)
+        static public void GetLocationToDeployShip(Player player, int numShip, out int row, out int col, out string orientation)
         {
-            Console.WriteLine("\n" + playerName + " enter location to deploy " + fleet.ships[numShip].ShipTypeAndSize() + ". (row, colum, orientation)");
+            Console.WriteLine("\n" + player.name + " enter location to deploy " + player.fleet.ships[numShip].ShipTypeAndSize() + ". (row, colum, orientation)");
             do
             {
                 Console.WriteLine("Enter row:");
-            } while (!int.TryParse(Console.ReadLine(), out row) || row < 0 || row > Constants.boardNumRows - 1);
+            } while (!int.TryParse(Console.ReadLine(), out row) || row < 0 || row > player.shipBoard.numRows - 1);
             do
             {
                 Console.WriteLine("Enter column:");
-            } while (!int.TryParse(Console.ReadLine(), out col) || col < 0 || col > Constants.boardNumCols - 1);
+            } while (!int.TryParse(Console.ReadLine(), out col) || col < 0 || col > player.shipBoard.numCols - 1);
             do
             {
                 Console.WriteLine("Enter orientation (left, right, up, down):");
@@ -112,18 +111,18 @@ namespace Battleship
             } while (orientation.ToLower() != "left" && orientation.ToLower() != "right" && orientation.ToLower() != "up" && orientation.ToLower() != "down");
         }
 
-        static public void GetPlayerGuess(string playerName, out int row, out int col)
+        static public void GetPlayerGuess(Player player, out int row, out int col)
         {
             Console.Clear();
-            Console.WriteLine("\n" + playerName + " enter guess location.  (row, colum)");
+            Console.WriteLine("\n" + player.name + " enter guess location.  (row, colum)");
             do
             {
                 Console.WriteLine("Enter row:");
-            } while (!int.TryParse(Console.ReadLine(), out row) || row < 0 || row > Constants.boardNumRows - 1);
+            } while (!int.TryParse(Console.ReadLine(), out row) || row < 0 || row > player.guessBoard.numRows - 1);
             do
             {
                 Console.WriteLine("Enter column:");
-            } while (!int.TryParse(Console.ReadLine(), out col) || col < 0 || col > Constants.boardNumCols - 1);
+            } while (!int.TryParse(Console.ReadLine(), out col) || col < 0 || col > player.guessBoard.numCols - 1);
         }
 
         static public void DisplayEndGameStats()
