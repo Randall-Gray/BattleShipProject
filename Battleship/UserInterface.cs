@@ -15,9 +15,17 @@ namespace Battleship
             Console.WriteLine("Let's play \"Battleship\"");
         }
 
+        static public void LetsPlay(Player player)
+        {
+            Console.Clear();
+            Console.WriteLine("Setup complete!  Let's play \"Battleship\"");
+            Console.WriteLine($"\n{player.name} - You go first.");
+            Console.ReadLine();
+        }
+
         static public string GetPlayerName(string name)
         {
-            Console.WriteLine($"Enter {name} name: ");
+            Console.WriteLine($"\nEnter {name} name: ");
             return Console.ReadLine();
         }
 
@@ -121,6 +129,11 @@ namespace Battleship
             {
                 Console.WriteLine("Enter column:");
             } while (!int.TryParse(Console.ReadLine(), out col) || col < 0 || col > player.guessBoard.numCols - 1);
+        }
+
+        static public void ReportMiss(Player player, int row, int col)
+        {
+            Console.WriteLine($"\n{player.name} ({row}, {col}) MISS!");
         }
 
         static public void DisplayEndGameStats()

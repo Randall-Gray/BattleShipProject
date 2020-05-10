@@ -26,13 +26,13 @@ namespace Battleship
         // Member methods
         public string ShipTypeAndSize()
         {
-            return type + "(" + numHoles + ")";
+            return $"{type}({numHoles})";
         }
 
         // A ship's Hole.type is the first letter of the ship's type, capitalized, and in parenthesis. 
         public string ShipHoleType()
         {
-            return "(" + type.ToUpper()[0] + ")";
+            return $"({type.ToUpper()[0]})";
         }
     }
 }

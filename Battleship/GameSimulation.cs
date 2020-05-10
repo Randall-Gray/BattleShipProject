@@ -27,6 +27,8 @@ namespace Battleship
             player1.PlaceShips();
             player2.PlaceShips();
 
+            UserInterface.LetsPlay(player1);
+
             do
             {
                 winner = player1.MakeGuess(player2);

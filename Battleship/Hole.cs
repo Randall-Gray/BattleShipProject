@@ -19,5 +19,4 @@ namespace Battleship
 
         // Member methods
     }
-
 }

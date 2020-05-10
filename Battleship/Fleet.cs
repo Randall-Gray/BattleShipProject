@@ -34,6 +34,16 @@ namespace Battleship
             return true;
         }
 
+        // Returns whether all ships in fleet are sunk.
+        public bool AllSunk()
+        {
+            for (int i = 0; i < ships.Count; i++)
+                if (!(ships[i].numHoles == ships[i].numHits))
+                    return false;
+
+            return true;
+        }
+
         // The ship deployment list gets smaller as ships are deployed.  Convert list selection to actual fleet ship number.
         public int ConvertSelectionToFleetShipNumber(int nonDeployedShipNumber)
         {
@@ -45,6 +55,14 @@ namespace Battleship
                     nonDeployedShipNumber--;
             }
             return i - 1;
+        }
+
+        // Marks the passed ship as hit and returns if it was sunk or not.
+        public bool MarkShipHit(string shipType)
+        {
+            // Find which ship
+            for (int i = 0; i < ships.Count; i++)
+
         }
     }
 }

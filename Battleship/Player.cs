@@ -140,25 +140,35 @@ namespace Battleship
                 UserInterface.DisplayBoard(guessBoard);
                 UserInterface.GetPlayerGuess(this, out row, out col);
 
-                guessBoard.grid[row, col] = opponent.shipBoard.grid[row, col];
-                if (guessBoard.grid[row, col].type == "( )")
-                    guessBoard.grid[row, col].type = "(-)";     // Miss
-                else    // Hit
-                {
-                    MarkShipHit(opponent, row, col);
-
-                }
-
-                //    CheckIfShipSunk(opponent.shipBoard, row, col);
-                //UserInterface.ReportHitOrMiss(row, col, guessBoard.grid[row, col]);
+                if (opponent.shipBoard.grid[row, col].type == "( )")
+                    MarkGuessMiss(row, col);
+                else
+                    MarkGuessHit(opponent, row, col);
             }
-            while (false);
+            while (CheckForWinner(opponent));
+
             return true;
         }
 
-        private void MarkShipHit(Player player, int row, int col)
+        private void MarkGuessMiss(int row, int col)
         {
+            guessBoard.grid[row, col].type = "(-)";     // Miss
+            UserInterface.DisplayBoard(guessBoard);
+            UserInterface.ReportMiss(this, row, col);
+        }
 
+        private void MarkGuessHit(Player opponent, int row, int col)
+        {
+            string shiphit = opponent.shipBoard.grid[row, col].type;
+
+            guessBoard.grid[row, col].type = shiphit;
+            bool shipSunk = opponent.fleet.ShipHit(shipHit);
+
+        }
+
+        private bool CheckForWinner(Player opponent)
+        {
+            return false;
         }
 
         //public void ChooseActions()
