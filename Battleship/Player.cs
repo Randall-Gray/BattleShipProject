@@ -31,7 +31,7 @@ namespace Battleship
             do
             {
                 numShip = UserInterface.SelectShipToDeploy(this);
-                UserInterface.DisplayBoard(shipBoard);
+                UserInterface.DisplayBoard(name, shipBoard);
                 PlaceShipOnBoard(numShip);
             }
             while (!fleet.AllDeployed());
@@ -135,66 +135,34 @@ namespace Battleship
             int row;
             int col;
 
-            do
-            {
-                UserInterface.DisplayBoard(guessBoard);
-                UserInterface.GetPlayerGuess(this, out row, out col);
+            UserInterface.DisplayBoard(name, guessBoard);
+            UserInterface.GetPlayerGuess(this, out row, out col);
 
-                if (opponent.shipBoard.grid[row, col].type == "( )")
-                    MarkGuessMiss(row, col);
-                else
-                    MarkGuessHit(opponent, row, col);
-            }
-            while (CheckForWinner(opponent));
+            if (opponent.shipBoard.grid[row, col].type == "( )")
+                MarkGuessMiss(row, col);
+            else
+                MarkGuessHit(opponent, row, col);
 
-            return true;
+            return opponent.fleet.AllSunk();
         }
 
         private void MarkGuessMiss(int row, int col)
         {
             guessBoard.grid[row, col].type = "(-)";     // Miss
-            UserInterface.DisplayBoard(guessBoard);
+            UserInterface.DisplayBoard(name, guessBoard);
             UserInterface.ReportMiss(this, row, col);
         }
 
         private void MarkGuessHit(Player opponent, int row, int col)
         {
-            string shiphit = opponent.shipBoard.grid[row, col].type;
+            string shipType = opponent.shipBoard.grid[row, col].type;
+            int shipNum = fleet.GetShipNumber(shipType);
 
-            guessBoard.grid[row, col].type = shiphit;
-            bool shipSunk = opponent.fleet.ShipHit(shipHit);
-
+            guessBoard.grid[row, col].type = shipType;
+            opponent.shipBoard.grid[row, col].type = "(!)";
+            opponent.fleet.ships[shipNum].numHits++;
+            UserInterface.DisplayBoard(name, guessBoard);
+            UserInterface.ReportHit(this, row, col, opponent.fleet.ships[shipNum]);
         }
-
-        private bool CheckForWinner(Player opponent)
-        {
-            return false;
-        }
-
-        //public void ChooseActions()
-        //{
-        //    bool validInput;
-        //    int numAction;
-
-        //    Console.Clear();            // Don't want to see other player's board.
-        //    do
-        //    {
-        //        Console.WriteLine("\n" + name + " select an action: ");
-        //        Console.WriteLine("1) Display Ship Board");
-        //        Console.WriteLine("3) Display Guess Board");
-        //        Console.WriteLine("4) Make Guess on Guess Board");
-
-        //        validInput = int.TryParse(Console.ReadLine(), out numAction);
-        //        if (!validInput)
-        //            continue;
-        //    }
-        //    while (!validInput || numAction < 0 || numAction > ruleTable.rules.Count - 1);
-
-        //    gesture = ruleTable.rules[numGesture][0].winGesture;
-
-        //    Console.WriteLine(name + " selected " + gesture);
-        //    Console.WriteLine("\nPress any key to continue...");
-        //    Console.ReadLine();
-        //}
     }
 }

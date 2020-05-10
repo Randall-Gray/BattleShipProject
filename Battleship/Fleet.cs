@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,7 +25,7 @@ namespace Battleship
         }
 
         // Member methods
-        // Returns if all ships in fleet are deployed.
+        // Returns whether all ships in fleet are deployed.
         public bool AllDeployed()
         {
             for (int i = 0; i < ships.Count; i++)
@@ -38,7 +39,7 @@ namespace Battleship
         public bool AllSunk()
         {
             for (int i = 0; i < ships.Count; i++)
-                if (!(ships[i].numHoles == ships[i].numHits))
+                if (!ships[i].ShipSunk())
                     return false;
 
             return true;
@@ -57,12 +58,17 @@ namespace Battleship
             return i - 1;
         }
 
-        // Marks the passed ship as hit and returns if it was sunk or not.
-        public bool MarkShipHit(string shipType)
+        // Get the ship number from the hold type.
+        public int GetShipNumber(string holeType)
         {
-            // Find which ship
-            for (int i = 0; i < ships.Count; i++)
+            int i = 0;
 
+            for (; i < ships.Count; i++)
+            {
+                if (ships[i].ShipHoleType() == holeType)
+                    break;
+            }
+            return i;
         }
     }
 }

@@ -34,5 +34,11 @@ namespace Battleship
         {
             return $"({type.ToUpper()[0]})";
         }
+
+        // Returns whether ship is sunk or not.
+        public bool ShipSunk()
+        {
+            return numHits == numHoles ? true : false;
+        }
     }
 }

@@ -18,8 +18,9 @@ namespace Battleship
         static public void LetsPlay(Player player)
         {
             Console.Clear();
-            Console.WriteLine("Setup complete!  Let's play \"Battleship\"");
+            Console.WriteLine("Setup complete!");
             Console.WriteLine($"\n{player.name} - You go first.");
+            Console.WriteLine("\nPress <Enter>...");
             Console.ReadLine();
         }
 
@@ -74,10 +75,10 @@ namespace Battleship
             Console.ReadLine();
         }
 
-        static public void DisplayBoard(Board board)
+        static public void DisplayBoard(string playerName, Board board)
         {
             Console.Clear();
-            Console.WriteLine($"\n{board.type} Board");
+            Console.WriteLine($"\n{playerName}'s {board.type} Board");
 
             for (int row = board.numRows - 1; row >= 0; row--)
             {
@@ -134,6 +135,19 @@ namespace Battleship
         static public void ReportMiss(Player player, int row, int col)
         {
             Console.WriteLine($"\n{player.name} ({row}, {col}) MISS!");
+            Console.WriteLine("\nPress <Enter>...");
+            Console.ReadLine();
+        }
+
+        static public void ReportHit(Player player, int row, int col, Ship ship)
+        {
+            if (ship.ShipSunk())
+                Console.WriteLine($"\n{player.name} ({row}, {col}) HIT! {ship.ShipTypeAndSize()} - SUNK!");
+            else 
+                Console.WriteLine($"\n{player.name} ({row}, {col}) HIT! {ship.ShipTypeAndSize()}");
+
+            Console.WriteLine("\nPress <Enter>...");
+            Console.ReadLine();
         }
 
         static public void DisplayEndGameStats()
