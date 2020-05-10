@@ -28,7 +28,7 @@ namespace Battleship
             bool validInput;
 
             Console.Clear();
-            Console.WriteLine("\n" + player.name + " deploy your ships.");
+            Console.WriteLine($"\n{player.name} deploy your ships.");
 
             do
             {
@@ -36,8 +36,6 @@ namespace Battleship
                 numDeployed = UserInterface.DisplayShipsToDeploy(player.fleet);
                 
                 validInput = int.TryParse(Console.ReadLine(), out numShip);
-                if (!validInput)
-                    continue;
             }
             while (!validInput || numShip <= 0 || numShip > player.fleet.ships.Count - numDeployed);
 
@@ -54,7 +52,7 @@ namespace Battleship
             {
                 if (!fleet.ships[i].deployed)
                 {
-                    Console.WriteLine((i - numDeployed + 1) + ") " + fleet.ships[i].ShipTypeAndSize());
+                    Console.WriteLine($"{i - numDeployed + 1}) {fleet.ships[i].ShipTypeAndSize()}");
                 }
                 else
                     numDeployed++;
@@ -64,17 +62,18 @@ namespace Battleship
 
         static public void DisplayLocationInvalidForShip(Fleet fleet, int numShip)
         {
-            Console.WriteLine("Invalid location for " + fleet.ships[numShip].ShipTypeAndSize());
+            Console.WriteLine($"Invalid location for {fleet.ships[numShip].ShipTypeAndSize()}");
             Console.ReadLine();
         }
 
         static public void DisplayBoard(Board board)
         {
+            Console.Clear();
             Console.WriteLine($"\n{board.type} Board");
 
             for (int row = board.numRows - 1; row >= 0; row--)
             {
-                Console.Write("Row: " + row + "\t");        // Display row numbers
+                Console.Write($"Row: {row}\t");        // Display row numbers
 
                 for (int col = 0; col < board.numCols; col++)
                 {
@@ -88,14 +87,14 @@ namespace Battleship
             {
                 if (col <= 10)
                     Console.Write(" ");
-                Console.Write(col + " ");
+                Console.Write($"{col} ");
             }
             Console.Write("\n");
         }
 
         static public void GetLocationToDeployShip(Player player, int numShip, out int row, out int col, out string orientation)
         {
-            Console.WriteLine("\n" + player.name + " enter location to deploy " + player.fleet.ships[numShip].ShipTypeAndSize() + ". (row, colum, orientation)");
+            Console.WriteLine($"\n{player.name} enter location to deploy {player.fleet.ships[numShip].ShipTypeAndSize()}. (row, colum, orientation)");
             do
             {
                 Console.WriteLine("Enter row:");
@@ -113,8 +112,7 @@ namespace Battleship
 
         static public void GetPlayerGuess(Player player, out int row, out int col)
         {
-            Console.Clear();
-            Console.WriteLine("\n" + player.name + " enter guess location.  (row, colum)");
+            Console.WriteLine($"\n{player.name} enter guess location.  (row, colum)");
             do
             {
                 Console.WriteLine("Enter row:");
@@ -135,7 +133,7 @@ namespace Battleship
         {
             bool rtnAns;
 
-            Console.WriteLine("\n" + question + "? (Y/N)");
+            Console.WriteLine($"\n{question}? (Y/N)");
             rtnAns = Console.ReadLine().ToUpper() == "Y";
             if (rtnAns)
                 Console.Clear();

@@ -13,14 +13,11 @@ namespace Battleship
         Player player2;
 
         // constructor
-        public GameSimulation()
-        {
-        }
 
         // Member methods
         public void RunGame()
         {
-            bool winner = false;
+            bool winner;
 
             UserInterface.Welcome();
 
@@ -33,7 +30,8 @@ namespace Battleship
             do
             {
                 winner = player1.MakeGuess(player2);
-                winner = player2.MakeGuess(player1);
+                if (!winner)
+                    winner = player2.MakeGuess(player1);
             } while (!winner);
 
             UserInterface.DisplayEndGameStats();
