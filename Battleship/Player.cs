@@ -143,7 +143,7 @@ namespace Battleship
             else
                 MarkGuessHit(opponent, row, col);
 
-            return opponent.fleet.AllSunk();
+            return opponent.fleet.NumShipsNotSunk() == 0;
         }
 
         private void MarkGuessMiss(int row, int col)

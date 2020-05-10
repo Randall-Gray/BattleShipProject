@@ -35,14 +35,16 @@ namespace Battleship
             return true;
         }
 
-        // Returns whether all ships in fleet are sunk.
-        public bool AllSunk()
+        // Returns number of ships in the fleet that are not sunk.
+        public int NumShipsNotSunk()
         {
+            int numShips = 0;
+
             for (int i = 0; i < ships.Count; i++)
                 if (!ships[i].ShipSunk())
-                    return false;
+                    numShips++;
 
-            return true;
+            return numShips;
         }
 
         // The ship deployment list gets smaller as ships are deployed.  Convert list selection to actual fleet ship number.

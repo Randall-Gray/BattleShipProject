@@ -17,7 +17,7 @@ namespace Battleship
         // Member methods
         public void RunGame()
         {
-            bool winner;
+            bool winner = false;
 
             UserInterface.Welcome();
 
@@ -31,9 +31,22 @@ namespace Battleship
 
             do
             {
-                winner = player1.MakeGuess(player2);
+                // A player gets one shot for every ship they have left.
+                for (int i = player1.fleet.NumShipsNotSunk(); i > 0; i--)
+                {
+                    winner = player1.MakeGuess(player2);
+                    if (winner)
+                        break;
+                }
                 if (!winner)
-                    winner = player2.MakeGuess(player1);
+                {
+                    for (int i = player2.fleet.NumShipsNotSunk(); i > 0; i--)
+                    {
+                        winner = player2.MakeGuess(player2);
+                        if (winner)
+                            break;
+                    }
+                }
             } while (!winner);
 
             UserInterface.DisplayEndGameStats();

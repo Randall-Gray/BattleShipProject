@@ -135,8 +135,8 @@ namespace Battleship
         static public void ReportMiss(Player player, int row, int col)
         {
             Console.WriteLine($"\n{player.name} ({row}, {col}) MISS!");
-            Console.WriteLine("\nPress <Enter>...");
-            Console.ReadLine();
+//            Console.WriteLine("\nPress <Enter>...");
+//            Console.ReadLine();
         }
 
         static public void ReportHit(Player player, int row, int col, Ship ship)
@@ -146,8 +146,8 @@ namespace Battleship
             else 
                 Console.WriteLine($"\n{player.name} ({row}, {col}) HIT! {ship.ShipTypeAndSize()}");
 
-            Console.WriteLine("\nPress <Enter>...");
-            Console.ReadLine();
+//            Console.WriteLine("\nPress <Enter>...");
+//            Console.ReadLine();
         }
 
         static public void DisplayEndGameStats()
