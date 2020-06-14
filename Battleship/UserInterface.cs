@@ -20,6 +20,11 @@ namespace Battleship
             Console.Clear();
             Console.WriteLine("Setup complete!");
             Console.WriteLine($"\n{player.name} - You go first.");
+            PressEnter();
+        }
+
+        static public void PressEnter()
+        {
             Console.WriteLine("\nPress <Enter>...");
             Console.ReadLine();
         }
@@ -119,24 +124,37 @@ namespace Battleship
             } while (orientation.ToLower() != "left" && orientation.ToLower() != "right" && orientation.ToLower() != "up" && orientation.ToLower() != "down");
         }
 
-        static public void GetPlayerGuess(Player player, out int row, out int col)
+        static public void GetPlayerGuess(Player player, int shotsLeft, out int row, out int col)
         {
-            Console.WriteLine($"\n{player.name} enter guess location.  (row, colum)");
+            string input = "";
+            row = -1;
+            col = -1;
+
+            Console.WriteLine($"\n{player.name} you have {shotsLeft} shot(s) left this turn.");
+            Console.WriteLine("Enter guess location:  (row, colum)  ('s' to display ship board)");
             do
             {
                 Console.WriteLine("Enter row:");
-            } while (!int.TryParse(Console.ReadLine(), out row) || row < 0 || row > player.guessBoard.numRows - 1);
-            do
+                input = Console.ReadLine();
+                if (input.ToLower() == "s")
+                    break;
+            } while (!int.TryParse(input, out row) || row < 0 || row > player.guessBoard.numRows - 1);
+            if (input.ToLower() != "s")
             {
-                Console.WriteLine("Enter column:");
-            } while (!int.TryParse(Console.ReadLine(), out col) || col < 0 || col > player.guessBoard.numCols - 1);
+                do
+                {
+                    Console.WriteLine("Enter column:");
+                    input = Console.ReadLine();
+                    if (input.ToLower() == "s")
+                        break;
+                } while (!int.TryParse(input, out col) || col < 0 || col > player.guessBoard.numCols - 1);
+            }
         }
 
         static public void ReportMiss(Player player, int row, int col)
         {
             Console.WriteLine($"\n{player.name} ({row}, {col}) MISS!");
-//            Console.WriteLine("\nPress <Enter>...");
-//            Console.ReadLine();
+            PressEnter();
         }
 
         static public void ReportHit(Player player, int row, int col, Ship ship)
@@ -146,13 +164,12 @@ namespace Battleship
             else 
                 Console.WriteLine($"\n{player.name} ({row}, {col}) HIT! {ship.ShipTypeAndSize()}");
 
-//            Console.WriteLine("\nPress <Enter>...");
-//            Console.ReadLine();
+            PressEnter();
         }
 
-        static public void DisplayEndGameStats()
+        static public void DisplayEndGameStats(Player winner)
         {
-            Console.WriteLine("\nGAME OVER!");
+            Console.WriteLine($"\nGAME OVER!   {winner.name.ToUpper()} WON!");
         }
 
         // Ask user a Yes or No question e.g. "Play again"

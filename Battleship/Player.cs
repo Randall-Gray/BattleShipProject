@@ -130,13 +130,20 @@ namespace Battleship
             return true;
         }
 
-        public bool MakeGuess(Player opponent)
+        public bool MakeGuess(Player opponent, int shotsLeft)
         {
             int row;
             int col;
 
-            UserInterface.DisplayBoard(name, guessBoard);
-            UserInterface.GetPlayerGuess(this, out row, out col);
+            while (true)
+            {
+                UserInterface.DisplayBoard(name, guessBoard);
+                UserInterface.GetPlayerGuess(this, shotsLeft, out row, out col);
+                if (row != -1 && col != -1)
+                    break;
+                UserInterface.DisplayBoard(name, shipBoard);
+                UserInterface.PressEnter();
+            };
 
             if (opponent.shipBoard.grid[row, col].type == "( )")
                 MarkGuessMiss(row, col);

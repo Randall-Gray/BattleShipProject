@@ -60,7 +60,7 @@ namespace Battleship
             return i - 1;
         }
 
-        // Get the ship number from the hold type.
+        // Get the ship number from the hole type.
         public int GetShipNumber(string holeType)
         {
             int i = 0;

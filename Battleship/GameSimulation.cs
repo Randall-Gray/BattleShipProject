@@ -34,22 +34,26 @@ namespace Battleship
                 // A player gets one shot for every ship they have left.
                 for (int i = player1.fleet.NumShipsNotSunk(); i > 0; i--)
                 {
-                    winner = player1.MakeGuess(player2);
+                    winner = player1.MakeGuess(player2, i);
                     if (winner)
+                    {
+                        UserInterface.DisplayEndGameStats(player1);
                         break;
+                    }
                 }
                 if (!winner)
                 {
                     for (int i = player2.fleet.NumShipsNotSunk(); i > 0; i--)
                     {
-                        winner = player2.MakeGuess(player2);
+                        winner = player2.MakeGuess(player1, i);
                         if (winner)
+                        {
+                            UserInterface.DisplayEndGameStats(player2);
                             break;
+                        }
                     }
                 }
             } while (!winner);
-
-            UserInterface.DisplayEndGameStats();
         }
     }
 }

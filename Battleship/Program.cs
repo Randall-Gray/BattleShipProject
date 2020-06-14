@@ -15,11 +15,8 @@ namespace Battleship
             do
             {
                 BattleShip.RunGame();
-
-                if (UserInterface.AskUserYesOrNo("Would you like to play again") != true)
-                    break;
             }
-            while (true);
+            while (UserInterface.AskUserYesOrNo("Would you like to play again"));
         }
     }
 }
